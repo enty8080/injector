@@ -4,8 +4,8 @@ RTFLAG = -shared -MD
 
 RELEASE_DLL = injector.dll
 DEBUG_DLL = injectord.dll
-RELEASE_STATIC_LIB = injector-static.lib
-DEBUG_STATIC_LIB = injectord-static.lib
+RELEASE_STATIC_LIB = libinjector.a
+DEBUG_STATIC_LIB = libinjectord.a
 
 RELEASE_OBJS = injector.o
 DEBUG_OBJS = injectord.o
@@ -26,10 +26,10 @@ injector.dll: $(RELEASE_OBJS)
 injectord.dll: $(DEBUG_OBJS)
 	$(CC) $(RTFLAG) -o injectord.dll -Wl,--out-implib,injectord.lib $(DEBUG_OBJS) -limagehlp
 
-injector-static.lib: $(RELEASE_OBJS)
+libinjector.a: $(RELEASE_OBJS)
 	$(AR) rc libinjector.a $(RELEASE_OBJS)
 
-injectord-static.lib: $(DEBUG_OBJS)
+libinjectord.a: $(DEBUG_OBJS)
 	$(AR) rc libinjectord.a $(DEBUG_OBJS)
 
 clean:
