@@ -1,14 +1,11 @@
 linux:
 	cd src/linux && make
-	cd cmd && make
 
 macos:
 	cd src/macos && make
-	cd cmd && make
 
 windows:
 	cd src/windows && make
-	cd cmd && make
 
 check:
 	cd tests && make check
