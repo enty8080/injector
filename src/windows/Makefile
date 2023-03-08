@@ -1,15 +1,36 @@
-INJECTOR_OBJS = injector.o
-CFLAGS = -Wall -fPIC -I../../include -MD -limagehlp -lmingw32
+CFLAGS = -O2 -I../../include
 
-all: libinjector.so libinjector.a
+RTFLAG = -shared
 
-libinjector.so: $(INJECTOR_OBJS)
-	$(CC) $(CFLAGS) -shared -o libinjector.so $(INJECTOR_OBJS)
+RELEASE_DLL = injector.dll
+DEBUG_DLL = injectord.dll
+RELEASE_STATIC_LIB = injector-static.lib
+DEBUG_STATIC_LIB = injectord-static.lib
 
-libinjector.a: $(INJECTOR_OBJS)
-	$(AR) rcs libinjector.a $(INJECTOR_OBJS)
+RELEASE_OBJS = injector.o
+DEBUG_OBJS = injectord.o
 
-injector.o: injector.c ../../include/injector.h
+TARGETS = $(RELEASE_DLL) $(DEBUG_DLL) $(RELEASE_STATIC_LIB) $(DEBUG_STATIC_LIB)
+
+all: $(TARGETS)
+
+injector.o: injector.c
+	$(CC) $(CFLAGS) $(RTFLAG) -c -o injector.o injector.c
+
+injectord.o: injector.c
+	$(CC) $(CFLAGS) $(RTFLAG) -DDEBUG -c -o injectord.o injector.c
+
+injector.dll: $(RELEASE_OBJS)
+	$(CC) $(RTFLAG) -o injector.dll -Wl,--out-implib,injector.lib $(RELEASE_OBJS)
+
+injectord.dll: $(DEBUG_OBJS)
+	$(CC) $(RTFLAG) -o injectord.dll -Wl,--out-implib,injectord.lib $(DEBUG_OBJS)
+
+injector-static.lib: $(RELEASE_OBJS)
+	$(AR) rc injector-static.lib $(RELEASE_OBJS)
+
+injectord-static.lib: $(DEBUG_OBJS)
+	$(AR) rc injectord-static.lib $(DEBUG_OBJS)
 
 clean:
-	$(RM) libinjector.so libinjector.a $(INJECTOR_OBJS)
+	rm -rf $(TARGETS) $(RELEASE_OBJS) $(DEBUG_OBJS) injector.lib injectord.lib injector.exp injectord.exp
