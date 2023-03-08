@@ -9,7 +9,7 @@ libinjector.so: $(INJECTOR_OBJS)
 libinjector.a: $(INJECTOR_OBJS)
 	$(AR) rcs libinjector.a $(INJECTOR_OBJS)
 
-injector.o: injector.c injector_internal.h ../../include/injector.h
+injector.o: injector.c
 
 clean:
 	$(RM) libinjector.so libinjector.a $(INJECTOR_OBJS)
