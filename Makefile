@@ -1,11 +1,13 @@
-UNAME_S := $(shell uname -s)
-ifeq ($(UNAME_S),Darwin)
-OS = macos
-else
-OS = linux
-endif
-all:
-	cd src/$(OS) && make
+linux:
+	cd src/linux && make
+	cd cmd && make
+
+macos:
+	cd src/macos && make
+	cd cmd && make
+
+windows:
+	cd src/windows && make
 	cd cmd && make
 
 check:
