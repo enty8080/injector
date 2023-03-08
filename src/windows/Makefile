@@ -1,5 +1,5 @@
 INJECTOR_OBJS = injector.o
-CFLAGS = -Wall -fPIC -I../../include
+CFLAGS = -Wall -fPIC -I../../include -MD
 
 all: libinjector.so libinjector.a
 
