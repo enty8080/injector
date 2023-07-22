@@ -166,7 +166,7 @@ int injector_inject(injector_t *injector, const char *path, void **handle)
     return 0;
 }
 
-int injector_call(injector_t *injector, void *handle, const char* name)
+int injector_call(injector_t *injector, void *handle, const char* name, int sockfd)
 {
     int rv;
     long retval;
@@ -184,7 +184,7 @@ int injector_call(injector_t *injector, void *handle, const char* name)
         injector__set_errmsg("function not found: %s", name);
         return INJERR_FUNCTION_MISSING;
     }
-    return injector__call_function(injector, &retval, retval);
+    return injector__call_function(injector, &retval, retval, sockfd);
 }
 
 int injector_uninject(injector_t *injector, void *handle)
