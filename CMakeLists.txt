@@ -19,5 +19,8 @@ set_property(TARGET injector PROPERTY POSITION_INDEPENDENT_CODE ON)
 
 set_target_properties(injector PROPERTIES OUTPUT_NAME injector)
 
+install(FILES include/injector.h DESTIONATION include)
+install(TARGETS injector)
+
 set(CPACK_PROJECT_NAME ${PROJECT_NAME})
 set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})
